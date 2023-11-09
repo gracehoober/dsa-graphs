@@ -70,17 +70,25 @@ class Graph {
     return nodeValues;
   }
 
-  /**
-   * start = T
-   * stack = [T]
-   * nodeValues = [T]
-   * seen = T, R, W,
-   * currentNode = T
-   * neighbor =
-   */
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) {}
+  breadthFirstSearch(start) {
+    let queue = [start];
+    let seen = new Set(queue);
+    let nodeValues = [];
+
+    while(queue.length > 0){
+      let currentNode = queue.shift();
+      nodeValues.push(currentNode.value);
+      for(let neighbor of currentNode.adjacent){
+        if(!seen.has(neighbor)){
+          queue.push(neighbor);
+          seen.add(neighbor);
+        }
+      }
+    }
+    return nodeValues;
+  }
 
   /** find the distance of the shortest path from the start node to the end node */
   distanceOfShortestPath(start, end) {}
