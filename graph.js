@@ -59,7 +59,7 @@ class Graph {
 
     while (stack.length > 0) {
       let currentNode = stack.pop();
-      nodeValues.push(currentNode.value)
+      nodeValues.push(currentNode.value);
       for (let neighbor of currentNode.adjacent) {
         if (!seen.has(neighbor)) {
           stack.push(neighbor);
@@ -70,18 +70,17 @@ class Graph {
     return nodeValues;
   }
 
-
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) {
     let queue = [start];
     let seen = new Set(queue);
     let nodeValues = [];
 
-    while(queue.length > 0){
+    while (queue.length > 0) {
       let currentNode = queue.shift();
       nodeValues.push(currentNode.value);
-      for(let neighbor of currentNode.adjacent){
-        if(!seen.has(neighbor)){
+      for (let neighbor of currentNode.adjacent) {
+        if (!seen.has(neighbor)) {
           queue.push(neighbor);
           seen.add(neighbor);
         }
@@ -91,7 +90,42 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start node to the end node */
-  distanceOfShortestPath(start, end) {}
+  distanceOfShortestPath(start, end, seen = new Set([start])) {
+    if (start === end) return 1;
+
+    let count;
+
+    //for each of my adjacdent nodes
+    //if I haven't seen this node yet
+    //ADD IT to seen
+    //recursively execute this function
+    //if what it returns is less than the current counter, update the counter
+    //otherwise, do not update it (do nothing)
+
+    for (let neighbor of start.adjacent) {
+      if (!seen.has(neighbor)) {
+        seen.add(neighbor);
+        if (count === undefined) {
+          count = this.distanceOfShortestPath(neighbor, end, seen);
+        } else {
+          let steps = this.distanceOfShortestPath(neighbor, end, seen);
+
+          if (steps < count) count = steps;
+        }
+      }
+    }
+
+    return count;
+  }
+
+  /**
+   * start = R
+   * end = M
+   * count = 4
+   * -----
+   *
+   * fn(R, M, seen={}) //4
+   */
 }
 
 module.exports = { Graph, Node };
