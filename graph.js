@@ -53,25 +53,31 @@ class Graph {
 
   /** traverse graph with DFS and returns array of Node values */
   depthFirstSearch(start) {
-    //stack
     let stack = [start];
-    //array of node vals
+    let seen = new Set(stack);
     let nodeValues = [];
-    let seen = new Set(start);
 
     while (stack.length > 0) {
       let currentNode = stack.pop();
-
+      nodeValues.push(currentNode.value)
       for (let neighbor of currentNode.adjacent) {
         if (!seen.has(neighbor)) {
           stack.push(neighbor);
           seen.add(neighbor);
-          nodeValues.push(neighbor.value);
         }
       }
     }
     return nodeValues;
   }
+
+  /**
+   * start = T
+   * stack = [T]
+   * nodeValues = [T]
+   * seen = T, R, W,
+   * currentNode = T
+   * neighbor =
+   */
 
   /** traverse graph with BDS and returns array of Node values */
   breadthFirstSearch(start) {}
