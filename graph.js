@@ -106,9 +106,10 @@ class Graph {
       if (!seen.has(neighbor)) {
         seen.add(neighbor);
         if (count === undefined) {
-          count = this.distanceOfShortestPath(neighbor, end, seen);
+          count = 1
+          count += this.distanceOfShortestPath(neighbor, end, seen); //individual function being return
         } else {
-          let steps = this.distanceOfShortestPath(neighbor, end, seen);
+
 
           if (steps < count) count = steps;
         }
@@ -127,5 +128,15 @@ class Graph {
    * fn(R, M, seen={}) //4
    */
 }
-
+//binary tree traversal
+/**
+ * traverse(node){
+ * if(node === null) return
+ **** top -> bottom
+ * traverse(node.left)
+ **** ordered A->Z
+ * traverse(node.right)
+ **** bottom -> top
+ * }
+ */
 module.exports = { Graph, Node };
