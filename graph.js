@@ -7,7 +7,6 @@ class Node {
   }
 }
 
-
 /** Graph class. */
 
 class Graph {
@@ -22,7 +21,7 @@ class Graph {
 
   /** add array of new Node instances and adds to them to nodes property. */
   addNodes(nodeArray) {
-    for(let node of nodeArray){
+    for (let node of nodeArray) {
       this.nodes.add(node);
     }
     //this.nodes = new Set(this.nodes,...nodeArray)
@@ -38,7 +37,7 @@ class Graph {
   removeEdge(n1, n2) {
     n1.adjacent.delete(n2);
     n2.adjacent.delete(n1);
-   }
+  }
 
   /** remove node from graph:
    *
@@ -47,36 +46,38 @@ class Graph {
    */
   removeNode(node) {
     this.nodes.delete(node);
-    for(let graphNode of this.nodes){
-      graphNode.adjacent.delete(node)
+    for (let graphNode of this.nodes) {
+      graphNode.adjacent.delete(node);
     }
-   }
+  }
 
   /** traverse graph with DFS and returns array of Node values */
   depthFirstSearch(start) {
     //stack
-    let stack = [start]
+    let stack = [start];
     //array of node vals
-    let nodeValues = new Set(stack);
+    let nodeValues = [];
+    let seen = new Set(start);
 
-    while(stack.length > 0){
+    while (stack.length > 0) {
       let currentNode = stack.pop();
 
-      for(let neighbor of currentNode.adjacent){
-        if(!nodeValues.has(neighbor)){
-          stack.push(neighbor)
-          nodeValues.add(neighbor)
+      for (let neighbor of currentNode.adjacent) {
+        if (!seen.has(neighbor)) {
+          stack.push(neighbor);
+          seen.add(neighbor);
+          nodeValues.push(neighbor.value);
         }
       }
     }
-    return nodeValues
+    return nodeValues;
   }
 
   /** traverse graph with BDS and returns array of Node values */
-  breadthFirstSearch(start) { }
+  breadthFirstSearch(start) {}
 
   /** find the distance of the shortest path from the start node to the end node */
-  distanceOfShortestPath(start, end) { }
+  distanceOfShortestPath(start, end) {}
 }
 
-module.exports = { Graph, Node }
+module.exports = { Graph, Node };
