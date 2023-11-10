@@ -90,44 +90,44 @@ class Graph {
   }
 
   /** find the distance of the shortest path from the start node to the end node */
-  distanceOfShortestPath(start, end, seen = new Set([start])) {
+  // distanceOfShortestPath(start, end, seen = new Set([start])) {
+  //   if (start === end) return 0;
+
+  //   let shortestPath;
+
+  //   for (let neighbor of start.adjacent) {
+  //     if (!seen.has(neighbor)) {
+  //       seen.add(neighbor);
+
+  //       let path = this.distanceOfShortestPath(neighbor, end, new Set(seen));
+
+  //       if (shortestPath > path || shortestPath === undefined) {
+  //         shortestPath = path;
+  //       }
+  //     }
+  //   }
+  //   return shortestPath + 1; //undefined + 1 = NaN
+  // }
+
+  distanceOfShortestPath(start, end) {
+    let queue = [[start, 0]];
+    let seen = new Set([start]);
+
     if (start === end) return 0;
 
-    let shortestPath;
-
-    for (let neighbor of start.adjacent) {
-      if (!seen.has(neighbor)) {
-        seen.add(neighbor);
-
-        let path = this.distanceOfShortestPath(neighbor, end, new Set(seen));
-
-        if (shortestPath > path || shortestPath === undefined) {
-          shortestPath = path;
+    while(queue.length > 0){
+      let current = queue.shift();
+      if(current[0] === end){
+        return current[1]
+      }
+      for (let neighbor of current[0].adjacent) {
+        if (!seen.has(neighbor)) {
+          queue.push([neighbor, current[1] + 1]);
+          seen.add(neighbor);
         }
       }
     }
-
-    return shortestPath + 1;
   }
-
-  /**
-   * start = R
-   * end = M
-   * count = 4
-   * -----
-   *
-   * fn(R, M, seen={}) //4
-   */
 }
-//binary tree traversal
-/**
- * traverse(node){
- * if(node === null) return
- **** top -> bottom
- * traverse(node.left)
- **** ordered A->Z
- * traverse(node.right)
- **** bottom -> top
- * }
- */
+
 module.exports = { Graph, Node };
