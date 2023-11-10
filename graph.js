@@ -91,32 +91,23 @@ class Graph {
 
   /** find the distance of the shortest path from the start node to the end node */
   distanceOfShortestPath(start, end, seen = new Set([start])) {
-    if (start === end) return 1;
+    if (start === end) return 0;
 
-    let count;
-
-    //for each of my adjacdent nodes
-    //if I haven't seen this node yet
-    //ADD IT to seen
-    //recursively execute this function
-    //if what it returns is less than the current counter, update the counter
-    //otherwise, do not update it (do nothing)
+    let shortestPath;
 
     for (let neighbor of start.adjacent) {
       if (!seen.has(neighbor)) {
         seen.add(neighbor);
-        if (count === undefined) {
-          count = 1
-          count += this.distanceOfShortestPath(neighbor, end, seen); //individual function being return
-        } else {
 
+        let path = this.distanceOfShortestPath(neighbor, end, new Set(seen));
 
-          if (steps < count) count = steps;
+        if (shortestPath > path || shortestPath === undefined) {
+          shortestPath = path;
         }
       }
     }
 
-    return count;
+    return shortestPath + 1;
   }
 
   /**
